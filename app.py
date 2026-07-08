@@ -208,7 +208,7 @@ for i, item in enumerate(st.session_state.invoice_items):
     c1, c2, c3, c4, c5 = st.columns([1, 3, 1, 1, 0.5])
     with c1: item['ref'] = st.text_input(f"Ref*", item['ref'], key=f"ref_{i}")
     with c2: item['desc'] = st.text_input(f"Description", item['desc'], key=f"desc_{i}")
-    with c3: item['qty'] = st.number_input(f"Qty", value=item['qty'], step=1, key=f"qty_{i}")
+    with c3: item['qty'] = st.number_input(f"Qty", value=float(item['qty']), step=0.01, format="%.5f", key=f"qty_{i}")
     with c4: item['price'] = st.number_input(f"Unit Price", value=item['price'], step=0.01, key=f"price_{i}")
     with c5:
         st.write("")
@@ -224,7 +224,7 @@ tc1, tc2 = st.columns(2)
 
 with tc1:
     vat_rate = st.number_input("VAT Rate (%)", value=18.0, step=0.1)
-    pay_mode = st.selectbox("Mode of Payment*", ["Bank Transfer", "Cash", "Cheque", "Credit Card", "Online Payment"])
+    pay_mode = st.selectbox("Mode of Payment*", ["Bank Transfer", "Cash", "Cheque", "Credit Card", "Online Payment", "Credit"])
     
     bank_details_str = ""
     if pay_mode == "Bank Transfer":
