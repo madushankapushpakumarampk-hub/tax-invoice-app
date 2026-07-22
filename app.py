@@ -241,7 +241,7 @@ with tc1:
 subtotal = sum(item['qty'] * item['price'] for item in st.session_state.invoice_items)
 vat_amount = subtotal * (vat_rate / 100)
 grand_total = subtotal + vat_amount
-auto_words = convert_to_words(grand_total)
+auto_words = convert_to_words(round(grand_total, 2))
 
 with tc2:
     st.markdown(f"### Subtotal: LKR {format_currency(subtotal)}")
