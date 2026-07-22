@@ -17,12 +17,21 @@ def format_currency(value):
     return f"{value:,.2f}"
 
 def convert_to_words(amount):
-    try:
-        # Convert to words in English
-        words = num2words(amount, lang='en').replace(',', '').replace('-', ' ')
-        return f"Rupees {words.title()} Only"
-    except:
-        return ""
+    # රුපියල් සහ සත වෙන් කරගැනීම
+    rupees = int(amount)
+    cents = int(round((amount - rupees) * 100))
+
+    # රුපියල් ටික වචන වලට හැරවීම (num2words එකෙන් එන 'and' කෑල්ල අයින් කරලා Title case කරනවා)
+    rupees_words = num2words(rupees).replace(" and ", " ").title()
+
+    # සත ගාණක් තියෙනවා නම් ඒකත් වචන වලට හරවලා එකතු කරනවා
+    if cents > 0:
+        cents_words = num2words(cents).replace(" and ", " ").title()
+        final_string = f"Rupee {rupees_words} And Cents {cents_words} Only"
+    else:
+        final_string = f"Rupee {rupees_words} Only"
+        
+    return final_string
 
 class InvoicePDF(FPDF):
     def header(self):
